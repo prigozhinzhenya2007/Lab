@@ -1,36 +1,36 @@
 #1.1
 def greet(name):
-    print("привет,", name)
+    return("привет,", name)
 
 n11 = str(input())
-greet(n11)
+print(greet(n11))
 
 #1.2
 def square(number):
-    print(number**2)
+    return(number**2)
 
 n12 = int(input())
-square(n12)
+print(square(n12))
 
 #1.3
 def max_of_two(x, y):
     if x > y:
-        print(x)
+        return(x)
     elif x < y:
-        print(y)
+        return(y)
     else:
-        print("=")
+        return("=")
 
 x = int(input())
 y = int(input())
-max_of_two(x, y)
+print(max_of_two(x, y))
 
 #2
 def describe_person(name, age):
-    print("имя -", name, ", возраст -", age)
+    return("имя -", name, ", возраст -", age)
 
 n2 = str(input())
-describe_person(n2, 30)
+print(describe_person(n2, 30))
 
 #3
 def is_prime(number):
@@ -39,9 +39,9 @@ def is_prime(number):
         if number%i == 0:
             c += 1
     if c > 0:
-        print("false")
+        return("false")
     else:
-        print("true")
+        return("true")
 
 n3 = int(input())
-is_prime(n3)
+print(is_prime(n3))
