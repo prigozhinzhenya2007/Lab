@@ -2,53 +2,69 @@
 class Employee:
     def __init__(self, name, emp_id):
         self.name = name
-        self.id = emp_id
+        self.emp_id = emp_id
 
     def get_info(self):
-        return f"Сотрудник: {self.name}, ID: {self.id}"
+        return f"Сотрудник: {self.name}, ID: {self.emp_id}"
 
 
 #2
-class Manager(Employee):
+class Manager:
     def __init__(self, name, emp_id, department):
-        Employee.__init__(self, name, emp_id)
+        self.name = name
+        self.emp_id = emp_id
         self.department = department
 
     def manage_project(self):
         return f"{self.name} управляет проектом в отделе {self.department}"
 
     def get_info(self):
-        return Employee.get_info(self) + f", Отдел: {self.department}"
+        return f"Менеджер: {self.name}, ID: {self.emp_id}, Отдел: {self.department}"
 
 
-#3
-class Technician(Employee):
+# 3. Technician
+class Technician:
     def __init__(self, name, emp_id, specialization):
-        Employee.__init__(self, name, emp_id)
+        self.name = name
+        self.emp_id = emp_id
         self.specialization = specialization
 
     def perform_maintenance(self):
         return f"{self.name} выполняет техническое обслуживание ({self.specialization})"
 
     def get_info(self):
-        return Employee.get_info(self) + f", Специализация: {self.specialization}"
+        return f"Техник: {self.name}, ID: {self.emp_id}, Специализация: {self.specialization}"
 
 
-#4
-class TechManager(Manager, Technician):
+#4–6
+class TechManager:
     def __init__(self, name, emp_id, department, specialization):
-        Employee.__init__(self, name, emp_id)
+        self.name = name
+        self.emp_id = emp_id
         self.department = department
         self.specialization = specialization
-        self.__team = []
+        self.team = []
+
+    def manage_project(self):
+        return f"{self.name} управляет проектом в отделе {self.department}"
+
+    def perform_maintenance(self):
+        return f"{self.name} выполняет техническое обслуживание ({self.specialization})"
 
     def add_employee(self, employee):
-        self.__team.append(employee)
+        self.team.append(employee)
 
     def get_team_info(self):
-        if not self.__team:
+        if not self.team:
             return "Подчинённых нет"
-        return "\n".join(emp.get_info() for emp in self.__team)
+        return "\n".join(emp.get_info() for emp in self.team)
+
+    def get_info(self):
+        return (
+            f"Техменеджер: {self.name}, ID: {self.emp_id}, "
+            f"Отдел: {self.department}, Специализация: {self.specialization}"
+        )
+
 
 #7
 emp = Employee("имя1", 1)
