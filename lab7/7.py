@@ -46,9 +46,15 @@ class TechManager(Manager, Technician):
         self.team.append(employee)
 
     def get_team_info(self):
-        if not self.team:
+        if len(self.team) == 0:
             return "Команда пуста"
-        return "\n".join(emp.get_info() for emp in self.team)
+
+        info = ""
+        for emp in self.team:
+            info += emp.get_info() + "\n"
+
+        return info.strip()
+
 
 # Создание сотрудников
 employee1 = Employee("имя1", 1)
