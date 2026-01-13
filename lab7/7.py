@@ -1,87 +1,77 @@
-#1
+# Employee
 class Employee:
     def __init__(self, name, emp_id):
         self.name = name
-        self.emp_id = emp_id
+        self.id = emp_id
 
     def get_info(self):
-        return f"Сотрудник: {self.name}, ID: {self.emp_id}"
+        return f"Сотрудник: {self.name}, ID: {self.id}"
 
-
-#2
+# Manager
 class Manager:
     def __init__(self, name, emp_id, department):
         self.name = name
-        self.emp_id = emp_id
+        self.id = emp_id
         self.department = department
+
+    def get_info(self):
+        return f"Менеджер: {self.name}, ID: {self.id}, Отдел: {self.department}"
 
     def manage_project(self):
         return f"{self.name} управляет проектом в отделе {self.department}"
 
-    def get_info(self):
-        return f"Менеджер: {self.name}, ID: {self.emp_id}, Отдел: {self.department}"
 
-
-# 3. Technician
+# Technician
 class Technician:
     def __init__(self, name, emp_id, specialization):
         self.name = name
-        self.emp_id = emp_id
+        self.id = emp_id
         self.specialization = specialization
-
-    def perform_maintenance(self):
-        return f"{self.name} выполняет техническое обслуживание ({self.specialization})"
 
     def get_info(self):
-        return f"Техник: {self.name}, ID: {self.emp_id}, Специализация: {self.specialization}"
-
-
-#4–6
-class TechManager:
-    def __init__(self, name, emp_id, department, specialization):
-        self.name = name
-        self.emp_id = emp_id
-        self.department = department
-        self.specialization = specialization
-        self.team = []
-
-    def manage_project(self):
-        return f"{self.name} управляет проектом в отделе {self.department}"
+        return f"Техник: {self.name}, ID: {self.id}, Специализация: {self.specialization}"
 
     def perform_maintenance(self):
         return f"{self.name} выполняет техническое обслуживание ({self.specialization})"
+
+
+# TechManager
+class TechManager(Manager, Technician):
+    def __init__(self, name, emp_id, department, specialization):
+        Manager.__init__(self, name, emp_id, department)
+        Technician.__init__(self, name, emp_id, specialization)
+        self.team = []  # список подчинённых
 
     def add_employee(self, employee):
         self.team.append(employee)
 
     def get_team_info(self):
         if not self.team:
-            return "Подчинённых нет"
+            return "Команда пуста"
         return "\n".join(emp.get_info() for emp in self.team)
 
-    def get_info(self):
-        return (
-            f"Техменеджер: {self.name}, ID: {self.emp_id}, "
-            f"Отдел: {self.department}, Специализация: {self.specialization}"
-        )
+# Создание сотрудников
+employee1 = Employee("имя1", 1)
+employee2 = Employee("имя2", 2)
+manager = Manager("имя3", 3, "1")
+technician = Technician("имя4", 4, "2")
+tech_manager = TechManager("имя5", 5, "1", "2")
 
+# Вывод информации
+print(employee1.get_info())
+print(manager.get_info())
+print(technician.get_info())
 
-#7
-emp = Employee("имя1", 1)
-man = Manager("имя2", 2, "деп1")
-tech = Technician("имя3", 3, "спец1")
-tech_man = TechManager("имя4", 4, "деп2", "спец2")
+print(manager.manage_project())
+print(technician.perform_maintenance())
 
-print(emp.get_info())
-print(man.get_info())
-print(tech.get_info())
-print(tech_man.get_info())
+# Работа TechManager
+tech_manager.add_employee(employee1)
+tech_manager.add_employee(employee2)
 
-print(tech_man.manage_project())
-print(tech_man.perform_maintenance())
+print("\nПодчинённые TechManager:")
+print(tech_manager.get_team_info())
 
-tech_man.add_employee(emp)
-tech_man.add_employee(tech)
-
-print("\nКоманда:")
-print(tech_man.get_team_info())
+print("\nTechManager может:")
+print(tech_manager.manage_project())
+print(tech_manager.perform_maintenance())
